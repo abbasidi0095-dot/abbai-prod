@@ -177,27 +177,55 @@ docker-compose up --build
 
 ## Production Deployment
 
-### Backend — Railway
+Code is on GitHub: `https://github.com/abbasidi0095-dot/abbai-prod`
 
-1. Push code to GitHub.
-2. Create a Railway project and connect the repo.
-3. Add environment variables in Railway dashboard.
-4. `railway.toml` is pre-configured; deploy.
+### One-click deploy
 
-### Database — Supabase PostgreSQL
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/abbasidi0095-dot/abbai-prod)
 
-Use Supabase PostgreSQL connection string as `DATABASE_URL`.
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://dashboard.render.com/blueprint?url=https://github.com/abbasidi0095-dot/abbai-prod)
+
+### Backend — Railway or Render
+
+**Railway:**
+1. Create a Railway project and connect the repo.
+2. Add the environment variables below.
+3. `railway.toml` is pre-configured; deploy.
+
+**Render:**
+1. Click the Render deploy button above or create a Blueprint from `render.yaml`.
+2. Fill in the secret environment variables when prompted.
 
 ### Frontend — Vercel
 
-1. Connect the repo to Vercel.
-2. Set framework preset to "Other".
+1. Click the Vercel deploy button above.
+2. Set framework preset to **Other**.
 3. Set output directory to `frontend/public`.
-4. Add environment variables and update `vercel.json` rewrites to point to your Railway backend.
+4. Update `vercel.json` rewrites to point to your deployed backend URL.
+
+### Required Environment Variables
+
+| Variable | Description |
+|----------|-------------|
+| `DATABASE_URL` | Supabase PostgreSQL connection string |
+| `SUPABASE_URL` | Supabase project URL |
+| `SUPABASE_ANON_KEY` | Supabase anon/public key |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase service role key |
+| `SUPABASE_JWT_SECRET` | Supabase JWT secret |
+| `GOOGLE_AI_API_KEY` | Google AI Studio API key |
+| `SESSION_SECRET` | Random secret for cookies |
+| `ENCRYPTION_KEY` | Random key for encryption |
+| `APP_URL` | Backend URL (e.g. `https://abbai-api.railway.app`) |
+| `FRONTEND_URL` | Frontend URL (e.g. `https://abbai.vercel.app`) |
+| `CORS_ORIGIN` | Frontend URL |
 
 ### Auth — Supabase Auth
 
-Configure email templates and OAuth providers (Google, GitHub) in Supabase Dashboard > Authentication.
+1. In Supabase Dashboard → Authentication → URL Configuration:
+   - Site URL: your frontend URL (`https://abbai.vercel.app`)
+   - Redirect URLs: add your backend callback (`https://abbai-api.railway.app/api/auth/callback`)
+2. Enable Google and GitHub providers under Authentication → Providers.
+3. Add your frontend URL to authorized OAuth redirect URIs in Google Cloud / GitHub OAuth apps.
 
 ---
 
