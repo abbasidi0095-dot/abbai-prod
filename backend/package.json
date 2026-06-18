@@ -25,6 +25,7 @@
     "@google/generative-ai": "^0.17.0",
     "@prisma/client": "^5.18.0",
     "@supabase/supabase-js": "^2.45.1",
+    "@types/node": "^22.4.0",
     "dotenv": "^16.4.5",
     "fastify": "^4.28.1",
     "fastify-plugin": "^4.5.1",
@@ -38,7 +39,6 @@
   },
   "devDependencies": {
     "@types/mime-types": "^2.1.4",
-    "@types/node": "^22.4.0",
     "prisma": "^5.18.0",
     "tsx": "^4.17.0",
     "typescript": "^5.5.4"
