@@ -1,0 +1,35 @@
+name: Deploy Backend
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'backend/**'
+      - 'railway.toml'
+      - 'render.yaml'
+  workflow_dispatch:
+
+jobs:
+  deploy-railway:
+    if: false # Set to true and add RAILWAY_TOKEN secret to enable
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy to Railway
+        uses: railwayapp/railway-github-deploy@v1
+        with:
+          railway_token: ${{ secrets.RAILWAY_TOKEN }}
+          service: abbai-backend
+          project_id: ${{ secrets.RAILWAY_PROJECT_ID }}
+
+  deploy-render:
+    if: false # Set to true and add RENDER_API_KEY secret to enable
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy to Render
+        uses: renderinc/render-deploy-action@v1
+        with:
+          service_id: ${{ secrets.RENDER_SERVICE_ID }}
+          api_key: ${{ secrets.RENDER_API_KEY }}
+          wait_for_deploy: true
