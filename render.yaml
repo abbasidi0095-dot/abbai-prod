@@ -3,8 +3,8 @@ services:
     name: abbai-backend
     runtime: node
     plan: starter
-    buildCommand: cd backend && npm install && npm run build
-    startCommand: cd backend && npm start
+    buildCommand: cd backend && npm install && npx prisma generate && npm run build
+    startCommand: cd backend && npx prisma migrate deploy && npm start
     envVars:
       - key: NODE_ENV
         value: production
