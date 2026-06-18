@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>ABBAI AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Geist:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    body { background: #0A0C14; color: #e2e1ee; font-family: Inter, sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+    .loader { width: 48px; height: 48px; border: 3px solid rgba(189,194,255,0.2); border-top-color: #bdc2ff; border-radius: 50%; animation: spin 1s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="loader"></div>
+  <noscript><p style="text-align:center;margin-top:20px;">Please enable JavaScript to use ABBAI.</p></noscript>
+  <script>
+    try {
+      var token = window.localStorage && window.localStorage.getItem('abbai_token');
+      if (token) {
+        window.location.href = '/chat.html';
+      } else {
+        window.location.href = '/login.html';
+      }
+    } catch (e) {
+      window.location.href = '/login.html';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Expires" content="0"/>
+<title>ABBAI - Sign Up</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&amp;family=Geist:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#11131b",
+                        "surface-bright": "#373942",
+                        "secondary-fixed-dim": "#d1bcff",
+                        "on-tertiary-fixed": "#001f25",
+                        "outline-variant": "#454655",
+                        "on-primary": "#00149e",
+                        "on-tertiary-fixed-variant": "#004e5a",
+                        "surface": "#11131b",
+                        "on-surface": "#e2e1ee",
+                        "on-primary-fixed": "#000965",
+                        "secondary": "#d1bcff",
+                        "secondary-fixed": "#eaddff",
+                        "on-background": "#e2e1ee",
+                        "on-primary-container": "#00118c",
+                        "background": "#11131b",
+                        "error": "#ffb4ab",
+                        "on-tertiary": "#00363e",
+                        "surface-container": "#1d1f28",
+                        "on-secondary-fixed": "#24005b",
+                        "on-secondary-container": "#c4abff",
+                        "tertiary-container": "#009fb4",
+                        "surface-container-highest": "#33343e",
+                        "inverse-primary": "#3a4bdf",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-fixed-variant": "#5425ac",
+                        "secondary-container": "#5728af",
+                        "surface-container-low": "#191b24",
+                        "primary-fixed-dim": "#bdc2ff",
+                        "surface-variant": "#33343e",
+                        "surface-container-high": "#282a32",
+                        "outline": "#8f8fa1",
+                        "inverse-on-surface": "#2e3039",
+                        "on-secondary": "#3d0090",
+                        "primary": "#bdc2ff",
+                        "on-surface-variant": "#c5c5d8",
+                        "primary-container": "#7886ff",
+                        "on-primary-fixed-variant": "#192dc8",
+                        "surface-tint": "#bdc2ff",
+                        "primary-fixed": "#dfe0ff",
+                        "tertiary-fixed-dim": "#2fd9f4",
+                        "on-error": "#690005",
+                        "tertiary-fixed": "#a2eeff",
+                        "surface-container-lowest": "#0c0e16",
+                        "inverse-surface": "#e2e1ee",
+                        "tertiary": "#2fd9f4",
+                        "error-container": "#93000a",
+                        "on-tertiary-container": "#002f36"
+                    },
+                    "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                    "spacing": { "margin-mobile": "16px", "container-max": "1280px", "stack-sm": "8px", "margin-desktop": "48px", "stack-md": "16px", "gutter": "24px", "stack-lg": "32px", "unit": "4px" },
+                    "fontFamily": { "display-lg": ["Inter"], "display-lg-mobile": ["Inter"], "body-lg": ["Inter"], "body-md": ["Inter"], "headline-md": ["Inter"], "label-sm": ["Geist"], "mono-code": ["Geist"] },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "display-lg-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "mono-code": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'progress-glow': 'progressGlow 2s ease-in-out infinite alternate'
+                    },
+                    keyframes: {
+                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-20px)' } },
+                        fadeInUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        progressGlow: { '0%': { boxShadow: '0 0 5px #7886ff, 0 0 10px #7886ff' }, '100%': { boxShadow: '0 0 10px #bdc2ff, 0 0 20px #bdc2ff' } }
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .bg-gradient-primary { background: linear-gradient(135deg, #7886ff 0%, #bdc2ff 100%); }
+        .bg-gradient-glow { background: radial-gradient(circle at center, rgba(120, 134, 255, 0.15) 0%, transparent 70%); }
+        .glass-panel { background: rgba(17, 24, 39, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .validation-message { max-height: 0; opacity: 0; overflow: hidden; transition: all 0.3s ease-in-out; }
+        .validation-message.show { max-height: 40px; opacity: 1; margin-top: 4px; }
+    </style>
+</head>
+<body class="bg-[#0A0C14] text-on-surface min-h-screen flex items-center justify-center overflow-hidden relative">
+<div class="absolute inset-0 bg-gradient-glow pointer-events-none animate-pulse-slow"></div>
+<div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-container/10 rounded-full blur-[100px] pointer-events-none animate-float"></div>
+<div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-tertiary-container/10 rounded-full blur-[100px] pointer-events-none animate-float" style="animation-delay: 3s;"></div>
+<main class="w-full max-w-md px-margin-mobile md:px-0 relative z-10 animate-fade-in-up">
+<div class="text-center mb-stack-lg flex flex-col items-center">
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-stack-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">graphic_eq</span>
+ABBAI
+</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Initialize your intelligence profile.</p>
+</div>
+<div class="glass-panel rounded-xl p-stack-lg shadow-[0_0_40px_rgba(189,194,255,0.05)] transition-all duration-500 hover:shadow-[0_0_60px_rgba(189,194,255,0.1)]">
+<form class="flex flex-col gap-stack-md" id="signup-form">
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant mb-stack-sm uppercase tracking-wider" for="name">Full Name</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">person</span>
+<input class="w-full bg-[#1A2235]/50 border border-white/10 rounded-lg pl-10 pr-4 py-3 font-body-md text-body-md text-white placeholder-outline-variant focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all outline-none" id="name" name="name" placeholder="Jane Doe" required="" type="text"/>
+</div>
+<div class="validation-message text-error text-xs font-label-sm mt-1">Please enter your full name.</div>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant mb-stack-sm uppercase tracking-wider" for="email">Email Address</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">mail</span>
+<input class="w-full bg-[#1A2235]/50 border border-white/10 rounded-lg pl-10 pr-4 py-3 font-body-md text-body-md text-white placeholder-outline-variant focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all outline-none" id="email" name="email" placeholder="jane@example.com" required="" type="email"/>
+</div>
+<div class="validation-message text-error text-xs font-label-sm mt-1">Please enter a valid email address.</div>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant mb-stack-sm uppercase tracking-wider" for="password">Password</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">lock</span>
+<input class="w-full bg-[#1A2235]/50 border border-white/10 rounded-lg pl-10 pr-10 py-3 font-body-md text-body-md text-white placeholder-outline-variant focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all outline-none" id="password" name="password" placeholder="••••••••" required="" type="password"/>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface transition-colors toggle-password" type="button">
+<span class="material-symbols-outlined text-sm">visibility</span>
+</button>
+</div>
+<div class="mt-2 h-1.5 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-gradient-primary w-2/3 rounded-full transition-all duration-300 ease-out animate-progress-glow" id="strength-bar"></div>
+</div>
+<div class="flex justify-between mt-1">
+<span class="text-[10px] text-on-surface-variant uppercase tracking-widest">Strength</span>
+<span class="text-[10px] text-primary uppercase tracking-widest font-semibold" id="strength-text">Strong</span>
+</div>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant mb-stack-sm uppercase tracking-wider" for="confirm-password">Confirm Password</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">lock_clock</span>
+<input class="w-full bg-[#1A2235]/50 border border-white/10 rounded-lg pl-10 pr-10 py-3 font-body-md text-body-md text-white placeholder-outline-variant focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all outline-none" id="confirm-password" name="confirm-password" placeholder="••••••••" required="" type="password"/>
+</div>
+<div class="validation-message text-error text-xs font-label-sm mt-1">Passwords do not match.</div>
+</div>
+<div class="flex items-start mt-stack-sm">
+<div class="flex items-center h-5">
+<input class="w-4 h-4 rounded bg-[#1A2235] border-white/20 text-primary focus:ring-primary focus:ring-offset-surface-dim transition-all" id="terms" name="terms" required="" type="checkbox"/>
+</div>
+<div class="ml-3 text-sm">
+<label class="font-body-md text-body-md text-on-surface-variant" for="terms">I agree to the <a class="text-primary hover:text-primary-fixed transition-colors underline decoration-primary/30 underline-offset-2" href="#">Terms of Service</a> and <a class="text-primary hover:text-primary-fixed transition-colors underline decoration-primary/30 underline-offset-2" href="#">Privacy Policy</a></label>
+</div>
+</div>
+<button class="w-full mt-stack-md bg-gradient-primary text-on-primary-fixed font-headline-md text-body-lg py-3 px-4 rounded-lg hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(189,194,255,0.4)] active:translate-y-0 transition-all duration-300 ease-in-out font-semibold" type="submit" id="signup-btn">Create Account</button>
+<div id="signup-error" class="hidden text-error text-sm font-label-sm"></div>
+</form>
+<div class="mt-stack-lg text-center">
+<p class="font-body-md text-body-md text-on-surface-variant">Already have an account? <a class="text-primary font-semibold hover:text-primary-fixed transition-colors ml-1" href="/login.html">Sign In</a></p>
+</div>
+</div>
+<div class="mt-stack-lg text-center flex justify-center items-center gap-2 opacity-50 transition-opacity hover:opacity-100">
+<span class="material-symbols-outlined text-sm">shield_locked</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Secure AES-256 Encryption</span>
+</div>
+</main>
+  <script src="/js/api.js?v=2"></script>
+  <script src="/js/auth.js?v=2"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var form = document.getElementById('signup-form');
+    var errorEl = document.getElementById('signup-error');
+    var btn = document.getElementById('signup-btn');
+    var password = document.getElementById('password');
+    var confirm = document.getElementById('confirm-password');
+    var strengthBar = document.getElementById('strength-bar');
+    var strengthText = document.getElementById('strength-text');
+
+    document.querySelectorAll('input').forEach(function (input) {
+        input.addEventListener('invalid', function (e) { e.preventDefault(); var msg = input.parentElement.parentElement.querySelector('.validation-message'); if(msg) msg.classList.add('show'); });
+        input.addEventListener('input', function () { var msg = input.parentElement.parentElement.querySelector('.validation-message'); if(msg) msg.classList.remove('show'); });
+    });
+
+    document.querySelector('.toggle-password').addEventListener('click', function () {
+        var type = password.type === 'password' ? 'text' : 'password';
+        password.type = type;
+        confirm.type = type;
+    });
+
+    password.addEventListener('input', function () {
+        var val = password.value;
+        var score = 0;
+        if (val.length > 7) score++;
+        if (/[A-Z]/.test(val)) score++;
+        if (/[0-9]/.test(val)) score++;
+        if (/[^A-Za-z0-9]/.test(val)) score++;
+        var widths = ['w-1/4', 'w-2/4', 'w-3/4', 'w-full'];
+        var labels = ['Weak', 'Fair', 'Good', 'Strong'];
+        strengthBar.className = 'h-full bg-gradient-primary rounded-full transition-all duration-300 ease-out ' + (widths[Math.max(0, score-1)] || 'w-1/4');
+        strengthText.textContent = labels[Math.max(0, score-1)] || 'Weak';
+    });
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        errorEl.classList.add('hidden');
+        if (password.value !== confirm.value) {
+            errorEl.textContent = 'Passwords do not match';
+            errorEl.classList.remove('hidden');
+            return;
+        }
+        btn.textContent = 'Creating account...';
+        var name = document.getElementById('name').value;
+        var email = document.getElementById('email').value;
+        signup(email, password.value, name).then(function () {
+            window.location.href = '/chat.html';
+        }).catch(function (err) {
+            btn.textContent = 'Create Account';
+            errorEl.textContent = (err.data && err.data.message) || err.message || 'Signup failed';
+            errorEl.classList.remove('hidden');
+        });
+    });
+});
+</script>
+</body>
+</html>

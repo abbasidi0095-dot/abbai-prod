@@ -1,0 +1,210 @@
+// Production PostgreSQL schema. Swap datasource provider from sqlite to postgresql.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(uuid()) @db.Uuid
+  supabaseUid   String   @unique @map("supabase_uid")
+  email         String   @unique
+  role          Role     @default(USER)
+  emailVerified Boolean  @default(false) @map("email_verified")
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt     DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  profile        Profile?
+  conversations  Conversation[]
+  messages       Message[]
+  attachments    Attachment[]
+  modelSettings  ModelSettings?
+  usageLogs      UsageLog[]
+  subscriptions  Subscription[]
+  apiKeys        ApiKey[]
+
+  @@map("users")
+}
+
+enum Role {
+  USER
+  ADMIN
+  MODERATOR
+}
+
+model Profile {
+  id        String  @id @default(uuid()) @db.Uuid
+  userId    String  @unique @map("user_id") @db.Uuid
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fullName  String? @map("full_name")
+  avatarUrl String? @map("avatar_url")
+  bio       String?
+  username  String? @unique
+  metadata  Json?   @default("{}")
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@map("profiles")
+}
+
+model Conversation {
+  id           String   @id @default(uuid()) @db.Uuid
+  userId       String   @map("user_id") @db.Uuid
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title        String?
+  model        String   @default("gemini-3.1-flash-lite")
+  provider     String   @default("google")
+  pinned       Boolean  @default(false)
+  archived     Boolean  @default(false)
+  systemPrompt String?  @map("system_prompt")
+  metadata     Json?    @default("{}")
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  messages    Message[]
+  attachments Attachment[]
+
+  @@index([userId, updatedAt])
+  @@map("conversations")
+}
+
+model Message {
+  id               String       @id @default(uuid()) @db.Uuid
+  conversationId   String       @map("conversation_id") @db.Uuid
+  conversation     Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  userId           String?      @map("user_id") @db.Uuid
+  user             User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
+  role             MessageRole
+  content          String       @db.Text
+  model            String?
+  provider         String?
+  tokensUsed       Int?         @map("tokens_used")
+  promptTokens     Int?         @map("prompt_tokens")
+  completionTokens Int?         @map("completion_tokens")
+  latencyMs        Int?         @map("latency_ms")
+  metadata         Json?        @default("{}")
+  createdAt        DateTime     @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  attachments Attachment[]
+
+  @@index([conversationId, createdAt])
+  @@map("messages")
+}
+
+enum MessageRole {
+  user
+  assistant
+  system
+}
+
+model Attachment {
+  id              String        @id @default(uuid()) @db.Uuid
+  messageId       String?       @map("message_id") @db.Uuid
+  message         Message?      @relation(fields: [messageId], references: [id], onDelete: SetNull)
+  conversationId  String?       @map("conversation_id") @db.Uuid
+  conversation    Conversation? @relation(fields: [conversationId], references: [id], onDelete: SetNull)
+  userId          String        @map("user_id") @db.Uuid
+  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  filename        String
+  originalName    String        @map("original_name")
+  mimeType        String        @map("mime_type")
+  size            Int
+  storagePath     String        @map("storage_path")
+  storageBucket   String        @map("storage_bucket")
+  signedUrl       String?       @map("signed_url")
+  urlExpiresAt    DateTime?     @map("url_expires_at") @db.Timestamptz(6)
+  metadata        Json?         @default("{}")
+  createdAt       DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@index([userId])
+  @@index([conversationId])
+  @@map("attachments")
+}
+
+model ModelSettings {
+  id              String   @id @default(uuid()) @db.Uuid
+  userId          String   @unique @map("user_id") @db.Uuid
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  defaultModel    String   @default("gemini-3.1-flash-lite") @map("default_model")
+  defaultProvider String   @default("google") @map("default_provider")
+  temperature     Float    @default(0.7)
+  maxTokens       Int?     @map("max_tokens")
+  topP            Float?   @map("top_p")
+  topK            Int?     @map("top_k")
+  systemPrompt    String?  @map("system_prompt")
+  isAdminPreset   Boolean  @default(false) @map("is_admin_preset")
+  metadata        Json?    @default("{}")
+  createdAt       DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt       DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@map("model_settings")
+}
+
+model UsageLog {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String?  @map("user_id") @db.Uuid
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  action    String
+  model     String?
+  provider  String?
+  tokensIn  Int?     @map("tokens_in")
+  tokensOut Int?     @map("tokens_out")
+  cost      Float?
+  latencyMs Int?     @map("latency_ms")
+  metadata  Json?    @default("{}")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@index([userId, createdAt])
+  @@index([action])
+  @@map("usage_logs")
+}
+
+model Subscription {
+  id                   String             @id @default(uuid()) @db.Uuid
+  userId               String             @map("user_id") @db.Uuid
+  user                 User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status               SubscriptionStatus @default(active)
+  plan                 String
+  stripeCustomerId     String?            @map("stripe_customer_id")
+  stripeSubscriptionId String?            @map("stripe_subscription_id")
+  currentPeriodStart   DateTime?          @map("current_period_start") @db.Timestamptz(6)
+  currentPeriodEnd     DateTime?          @map("current_period_end") @db.Timestamptz(6)
+  cancelAtPeriodEnd    Boolean            @default(false) @map("cancel_at_period_end")
+  metadata             Json?              @default("{}")
+  createdAt            DateTime           @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt            DateTime           @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@index([userId])
+  @@map("subscriptions")
+}
+
+enum SubscriptionStatus {
+  active
+  canceled
+  past_due
+  unpaid
+  trialing
+}
+
+model ApiKey {
+  id         String    @id @default(uuid()) @db.Uuid
+  userId     String    @map("user_id") @db.Uuid
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name       String
+  keyHash    String    @map("key_hash")
+  keyPrefix  String    @map("key_prefix")
+  scopes     String[]
+  lastUsedAt DateTime? @map("last_used_at") @db.Timestamptz(6)
+  expiresAt  DateTime? @map("expires_at") @db.Timestamptz(6)
+  revokedAt  DateTime? @map("revoked_at") @db.Timestamptz(6)
+  metadata   Json?     @default("{}")
+  createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@index([userId])
+  @@map("api_keys")
+}

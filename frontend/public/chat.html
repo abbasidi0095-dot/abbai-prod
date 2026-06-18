@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Expires" content="0"/>
+<title>ABBAI - Active Chat</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+              "surface-dim": "#11131b",
+              "surface-bright": "#373942",
+              "secondary-fixed-dim": "#d1bcff",
+              "on-tertiary-fixed": "#001f25",
+              "outline-variant": "#454655",
+              "on-primary": "#00149e",
+              "on-tertiary-fixed-variant": "#004e5a",
+              "surface": "#11131b",
+              "on-surface": "#e2e1ee",
+              "on-primary-fixed": "#000965",
+              "secondary": "#d1bcff",
+              "secondary-fixed": "#eaddff",
+              "on-background": "#e2e1ee",
+              "on-primary-container": "#00118c",
+              "background": "#11131b",
+              "error": "#ffb4ab",
+              "on-tertiary": "#00363e",
+              "surface-container": "#1d1f28",
+              "on-secondary-fixed": "#24005b",
+              "on-secondary-container": "#c4abff",
+              "tertiary-container": "#009fb4",
+              "surface-container-highest": "#33343e",
+              "inverse-primary": "#3a4bdf",
+              "on-error-container": "#ffdad6",
+              "on-secondary-fixed-variant": "#5425ac",
+              "secondary-container": "#5728af",
+              "surface-container-low": "#191b24",
+              "primary-fixed-dim": "#bdc2ff",
+              "surface-variant": "#33343e",
+              "surface-container-high": "#282a32",
+              "outline": "#8f8fa1",
+              "inverse-on-surface": "#2e3039",
+              "on-secondary": "#3d0090",
+              "primary": "#bdc2ff",
+              "on-surface-variant": "#c5c5d8",
+              "primary-container": "#7886ff",
+              "on-primary-fixed-variant": "#192dc8",
+              "surface-tint": "#bdc2ff",
+              "primary-fixed": "#dfe0ff",
+              "tertiary-fixed-dim": "#2fd9f4",
+              "on-error": "#690005",
+              "tertiary-fixed": "#a2eeff",
+              "surface-container-lowest": "#0c0e16",
+              "inverse-surface": "#e2e1ee",
+              "tertiary": "#2fd9f4",
+              "error-container": "#93000a",
+              "on-tertiary-container": "#002f36"
+            },
+            "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+            "spacing": { "margin-mobile": "16px", "container-max": "1280px", "stack-sm": "8px", "margin-desktop": "48px", "stack-md": "16px", "gutter": "24px", "stack-lg": "32px", "unit": "4px" },
+            "fontFamily": { "display-lg": ["Inter"], "display-lg-mobile": ["Inter"], "body-lg": ["Inter"], "body-md": ["Inter"], "headline-md": ["Inter"], "label-sm": ["Geist"], "mono-code": ["Geist"] },
+            "fontSize": {
+              "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+              "display-lg-mobile": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+              "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+              "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+              "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+              "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+              "mono-code": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+      ::-webkit-scrollbar { width: 6px; height: 6px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+      ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+      @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+      .animate-shimmer { background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%); background-size: 200% 100%; animation: shimmer 2s infinite; }
+      @keyframes streamIn { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
+      .animate-stream { animation: streamIn 0.4s ease-out forwards; }
+      .thinking-dot { animation: bounce 1.4s infinite ease-in-out both; }
+      .thinking-dot:nth-child(1) { animation-delay: -0.32s; }
+      .thinking-dot:nth-child(2) { animation-delay: -0.16s; }
+      @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+    </style>
+</head>
+<body class="bg-background text-on-surface h-screen w-screen overflow-hidden flex font-body-md text-body-md selection:bg-primary/30 selection:text-primary-fixed">
+<div class="fixed inset-0 z-[-1] pointer-events-none">
+<div class="w-full h-full" style="display:block;">
+<canvas id="shader-canvas-bg" style="display:block;width:100%;height:100%"></canvas>
+</div>
+</div>
+<nav class="h-screen w-72 flex-col fixed left-0 top-0 hidden md:flex border-r border-white/10 bg-surface/80 dark:bg-surface/80 backdrop-blur-xl shadow-[0_0_20px_rgba(189,194,255,0.15)] z-50">
+<div class="flex flex-col h-full p-stack-md">
+<div class="mb-8 px-2 flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-inverse-primary flex items-center justify-center shadow-lg">
+<span class="material-symbols-outlined text-on-primary" style="font-variation-settings: 'FILL' 1;">graphic_eq</span>
+</div>
+<div>
+<h1 class="font-display-lg text-display-lg font-bold text-primary tracking-tight" style="font-size: 24px; line-height: 28px;">ABBAI AI</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Sophisticated Intelligence</p>
+</div>
+</div>
+<button class="mb-6 w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-primary/10 border border-primary/20 text-primary font-label-sm text-label-sm hover:scale-[1.02] hover:bg-primary/20 duration-200 transition-all shadow-[0_0_15px_rgba(189,194,255,0.05)]" id="new-chat-sidebar">
+<span class="material-symbols-outlined text-[18px]">add</span>New Chat
+</button>
+<div class="flex-1 space-y-1 overflow-y-auto" id="conversation-list">
+</div>
+<div class="mt-auto pt-4 border-t border-white/5 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-bright/50 hover:scale-[1.02] duration-200 transition-all ease-in-out" href="/chat.html">
+<span class="material-symbols-outlined">history</span><span>History</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-bright/50 hover:scale-[1.02] duration-200 transition-all ease-in-out" href="#" id="logout-btn">
+<span class="material-symbols-outlined">logout</span><span>Logout</span>
+</a>
+</div>
+</div>
+</nav>
+<main class="flex-1 flex flex-col relative w-full h-full md:ml-72 bg-transparent">
+<div class="absolute inset-0 pointer-events-none overflow-hidden">
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/5 blur-[120px] rounded-full opacity-50"></div>
+</div>
+<header class="w-full h-16 md:hidden sticky top-0 z-40 backdrop-blur-md bg-surface/50 border-b border-white/5 flex justify-between items-center px-margin-mobile">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" id="mobile-menu-toggle">menu</span>
+<span class="font-display-lg-mobile text-display-lg-mobile font-black tracking-tighter text-primary" style="font-size: 20px;">ABBAI</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant hover:opacity-80 active:scale-95 transition-transform">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:opacity-80 active:scale-95 transition-transform">more_vert</span>
+</div>
+</header>
+<div class="flex-1 overflow-y-auto w-full relative z-10 scroll-smooth pb-40" id="chat-scroll">
+<div class="max-w-[800px] mx-auto w-full px-margin-mobile md:px-margin-desktop py-8 min-h-full" id="messages-container">
+<!-- Empty state / suggestions -->
+<div id="empty-state" class="flex flex-col items-center justify-center h-full py-12">
+<div class="relative w-24 h-24 mb-stack-lg flex items-center justify-center group cursor-default">
+<div class="absolute inset-0 bg-primary/20 rounded-full blur-xl group-hover:bg-primary/30 transition-all duration-700 animate-pulse"></div>
+<span class="material-symbols-outlined text-6xl text-primary relative z-10 drop-shadow-[0_0_15px_rgba(189,194,255,0.5)] transform group-hover:scale-110 transition-transform duration-500" style="font-variation-settings: 'FILL' 1;">graphic_eq</span>
+</div>
+<h1 class="font-display-lg text-display-lg text-transparent bg-clip-text bg-gradient-to-b from-white to-on-surface-variant text-center mb-12">What can I help you build today?</h1>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+<button class="suggestion-btn glass-panel p-5 rounded-xl text-left hover:border-primary/50 hover:bg-surface-bright/20 group flex flex-col gap-3" data-prompt="Build a SaaS application architecture">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center group-hover:bg-primary/20 transition-colors"><span class="material-symbols-outlined text-primary">rocket_launch</span></div>
+<div><h3 class="font-body-lg text-body-lg text-on-surface font-medium group-hover:text-primary transition-colors">Build SaaS</h3><p class="font-body-md text-body-md text-on-surface-variant/70 line-clamp-2 mt-1">Design and architect a scalable web application.</p></div>
+</button>
+<button class="suggestion-btn glass-panel p-5 rounded-xl text-left hover:border-tertiary/50 hover:bg-surface-bright/20 group flex flex-col gap-3" data-prompt="Research a complex topic with cited sources">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center group-hover:bg-tertiary/20 transition-colors"><span class="material-symbols-outlined text-tertiary">science</span></div>
+<div><h3 class="font-body-lg text-body-lg text-on-surface font-medium group-hover:text-tertiary transition-colors">Research Topic</h3><p class="font-body-md text-body-md text-on-surface-variant/70 line-clamp-2 mt-1">Deep dive into complex subjects.</p></div>
+</button>
+<button class="suggestion-btn glass-panel p-5 rounded-xl text-left hover:border-secondary/50 hover:bg-surface-bright/20 group flex flex-col gap-3" data-prompt="Generate marketing content for a product">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center group-hover:bg-secondary/20 transition-colors"><span class="material-symbols-outlined text-secondary">edit_document</span></div>
+<div><h3 class="font-body-lg text-body-lg text-on-surface font-medium group-hover:text-secondary transition-colors">Generate Content</h3><p class="font-body-md text-body-md text-on-surface-variant/70 line-clamp-2 mt-1">Draft articles, copy, or documentation.</p></div>
+</button>
+<button class="suggestion-btn glass-panel p-5 rounded-xl text-left hover:border-error/50 hover:bg-surface-bright/20 group flex flex-col gap-3" data-prompt="Analyze a CSV file and extract insights">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center group-hover:bg-error/20 transition-colors"><span class="material-symbols-outlined text-error">analytics</span></div>
+<div><h3 class="font-body-lg text-body-lg text-on-surface font-medium group-hover:text-error transition-colors">Analyze Files</h3><p class="font-body-md text-body-md text-on-surface-variant/70 line-clamp-2 mt-1">Extract insights from uploaded data.</p></div>
+</button>
+</div>
+</div>
+<div id="messages-list" class="hidden space-y-12"></div>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-[#0A0C14] via-[#0A0C14]/90 to-transparent pt-12 pb-6 px-margin-mobile md:px-margin-desktop z-30 pointer-events-none">
+<div class="max-w-[800px] mx-auto w-full relative pointer-events-auto flex flex-col items-center">
+<div id="thinking-state" class="hidden items-center gap-2 mb-3 opacity-80">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest border border-primary/20 flex items-center justify-center shadow-[0_0_10px_rgba(189,194,255,0.08)]">
+<span class="material-symbols-outlined text-primary text-[16px]" style="font-variation-settings: 'FILL' 1;">robot_2</span>
+</div>
+<span id="thinking-label" class="text-xs font-medium text-primary/80 tracking-wide uppercase animate-pulse">Reasoning...</span>
+</div>
+<div class="w-full relative group">
+<div class="absolute -inset-1 bg-gradient-to-r from-primary/10 via-tertiary/10 to-secondary/10 rounded-3xl blur-md opacity-50 group-focus-within:opacity-100 transition-opacity duration-500"></div>
+<div class="relative flex items-end bg-[#111827]/80 backdrop-blur-2xl rounded-[24px] border border-white/10 p-2 shadow-[0_8px_30px_rgba(0,0,0,0.4)] transition-all duration-300 focus-within:border-primary/40 focus-within:shadow-[0_0_20px_rgba(189,194,255,0.15)] focus-within:bg-[#111827]/95">
+<div class="flex items-center gap-1 pb-1 pl-1 shrink-0">
+<input type="file" id="file-input" class="hidden" multiple/>
+<button aria-label="Attach File" class="p-2.5 rounded-full text-on-surface-variant hover:text-primary hover:bg-white/5 transition-all duration-200 focus:outline-none" id="attach-btn">
+<span class="material-symbols-outlined text-[20px]">attach_file</span>
+</button>
+<button aria-label="Upload Image" class="p-2.5 rounded-full text-on-surface-variant hover:text-primary hover:bg-white/5 transition-all duration-200 focus:outline-none" id="image-btn">
+<span class="material-symbols-outlined text-[20px]">image</span>
+</button>
+</div>
+<textarea class="w-full bg-transparent border-none text-on-surface focus:ring-0 resize-none max-h-32 py-3.5 px-4 font-body-md text-body-md placeholder:text-on-surface-variant/50 focus:outline-none" id="composer" placeholder="Message ABBAI..." rows="1" style="min-height: 52px;"></textarea>
+<div class="pb-1 pr-1 shrink-0">
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-gradient-to-tr from-primary to-inverse-primary text-on-primary hover:scale-105 transition-all duration-200 focus:outline-none shadow-[0_0_15px_rgba(189,194,255,0.3)] disabled:opacity-50 disabled:hover:scale-100" id="send-btn">
+<span class="material-symbols-outlined text-[20px] translate-x-[1px]" style="font-variation-settings: 'FILL' 1;">send</span>
+</button>
+</div>
+</div>
+<div class="flex flex-wrap gap-2 mt-2 px-2" id="file-chips"></div>
+</div>
+<p class="font-label-sm text-[10px] text-on-surface-variant/50 mt-4 text-center">ABBAI may produce inaccurate information about people, places, or facts.</p>
+</div>
+</div>
+</main>
+  <script src="/js/api.js?v=2"></script>
+  <script src="/js/auth.js?v=2"></script>
+<script>
+(function(){
+  var canvas = document.getElementById('shader-canvas-bg');
+  function syncSize(){ var w=canvas.clientWidth||1280; var h=canvas.clientHeight||720; if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;} }
+  if(typeof ResizeObserver!=='undefined') new ResizeObserver(syncSize).observe(canvas);
+  syncSize();
+  var gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  if(gl){
+    var vs='attribute vec2 a_position; varying vec2 v_texCoord; void main(){ v_texCoord=a_position*0.5+0.5; gl_Position=vec4(a_position,0.0,1.0); }';
+    var fs='precision highp float; varying vec2 v_texCoord; uniform float u_time; void main(){ vec2 uv=v_texCoord; float n=sin(uv.x*2.0+u_time*0.2)*0.5+0.5; n+=cos(uv.y*2.0+u_time*0.3)*0.5+0.5; vec3 a=vec3(0.039,0.047,0.078); vec3 b=vec3(0.067,0.094,0.153); vec3 c=mix(a,b,n*0.5); float g=(step(0.98,fract(uv.x*10.0))+step(0.98,fract(uv.y*10.0)))*0.02; c+=g; gl_FragColor=vec4(c,1.0); }';
+    function cs(t,s){var sh=gl.createShader(t);gl.shaderSource(sh,s);gl.compileShader(sh);return sh;}
+    var prog=gl.createProgram(); gl.attachShader(prog,cs(gl.VERTEX_SHADER,vs)); gl.attachShader(prog,cs(gl.FRAGMENT_SHADER,fs)); gl.linkProgram(prog); gl.useProgram(prog);
+    var buf=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,buf); gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+    var pos=gl.getAttribLocation(prog,'a_position'); gl.enableVertexAttribArray(pos); gl.vertexAttribPointer(pos,2,gl.FLOAT,false,0,0);
+    var tLoc=gl.getUniformLocation(prog,'u_time');
+    function render(t){ if(typeof ResizeObserver==='undefined') syncSize(); gl.viewport(0,0,canvas.width,canvas.height); gl.uniform1f(tLoc,t*0.001); gl.drawArrays(gl.TRIANGLE_STRIP,0,4); requestAnimationFrame(render); }
+    render(0);
+  }
+})();
+</script>
+  <script src="/js/chat.js?v=2"></script>
+</body>
+</html>

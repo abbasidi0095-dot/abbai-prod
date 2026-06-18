@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+  <meta http-equiv="Pragma" content="no-cache"/>
+  <meta http-equiv="Expires" content="0"/>
+  <title>ABBAI - Authenticating</title>
+  <style>
+    body { background: #0A0C14; color: #e2e1ee; font-family: Inter, sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; flex-direction: column; }
+    .loader { width: 40px; height: 40px; border: 3px solid rgba(189,194,255,0.2); border-top-color: #bdc2ff; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 16px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .error { color: #ffb4ab; max-width: 300px; text-align: center; padding: 0 20px; }
+  </style>
+</head>
+<body>
+  <div class="loader"></div>
+  <p id="status">Completing sign in...</p>
+  <p id="error" class="error hidden"></p>
+  <script src="/js/api.js?v=2"></script>
+  <script>
+    function parseHash() {
+      var hash = window.location.hash;
+      if (!hash || hash.length < 2) return null;
+      var params = {};
+      var pairs = hash.substring(1).split('&');
+      for (var i = 0; i < pairs.length; i++) {
+        var pair = pairs[i].split('=');
+        if (pair.length === 2) {
+          params[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+        }
+      }
+      return params;
+    }
+
+    function parseQuery() {
+      var query = window.location.search;
+      if (!query || query.length < 2) return null;
+      var params = {};
+      var pairs = query.substring(1).split('&');
+      for (var i = 0; i < pairs.length; i++) {
+        var pair = pairs[i].split('=');
+        if (pair.length === 2) {
+          params[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+        }
+      }
+      return params;
+    }
+
+    function showError(msg) {
+      document.getElementById('status').style.display = 'none';
+      var err = document.getElementById('error');
+      err.textContent = msg;
+      err.classList.remove('hidden');
+    }
+
+    var hashParams = parseHash();
+    var queryParams = parseQuery();
+
+    if (hashParams && hashParams.access_token) {
+      setToken(hashParams.access_token, true);
+      window.location.href = '/chat.html';
+    } else if (queryParams && queryParams.code) {
+      // PKCE code exchange via backend
+      api('/auth/exchange?code=' + encodeURIComponent(queryParams.code), { method: 'POST' })
+        .then(function (data) {
+          if (data.access_token) {
+            setToken(data.access_token, true);
+            window.location.href = '/chat.html';
+          } else {
+            showError('Authentication failed. Please try again.');
+          }
+        })
+        .catch(function (err) {
+          showError((err.data && err.data.message) || err.message || 'Authentication failed.');
+        });
+    } else if (queryParams && queryParams.error) {
+      showError(decodeURIComponent(queryParams.error_description || queryParams.error));
+    } else {
+      showError('No authentication data received.');
+    }
+  </script>
+</body>
+</html>
